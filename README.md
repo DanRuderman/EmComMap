@@ -169,6 +169,8 @@ Within them, change the following:
 1. Change the RUN_LOCATION string to *my-install* instead of *local*
 1. Change both instances of `<host>` to the name or IP address of your EmComMap server. Note that if you have the CouchDB server on a different computer, then use that computer's address for *DEFAULT_DB_HOST*.
 
+Set the value of `ADMIN_EMAIL` to be the email address for credentials requests.
+
 Additionally, if your deployment is for testing only set the value of `TEST_MODE` to `true` in `config.js`. This will put the text TESTING in bold red font at the top of the application and precede all messages with "TESTING:". The purpose is to ensure that test traffic is not mistaken for a real-world emergency.
 
 #### Database replication
