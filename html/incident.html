@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<!-- Copyright 2018 Dan Ruderman (dlruderman@gmail.com) -->
+<!--
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>EmComMap - incident selection</title>
+
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="css/style.css"/>
+<link rel="stylesheet" href="css/leaflet.css"/>
+<link rel="stylesheet" href="css/leaflet.draw.css"/>
+<link rel="stylesheet" href="css/jquery-ui-timepicker-addon.css"/>
+<link rel="stylesheet" href="css/jquery-ui.css"/>
+
+</head>
+
+<body>
+<script src="js/js.cookie.js"></script>
+<script src="config.js"></script>
+<script src="init.js"></script>
+<script src="js/pouchdb-7.0.0.min.js"></script>
+<script src="js/pouchdb.find.js"></script>
+<script src="db.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/timeago.js"></script>
+<script src="js/leaflet.js"></script>
+<script src="js/Leaflet.draw.js"></script>
+<script src="js/Leaflet.Draw.Event.js"></script>
+<script src="js/moment.js"></script>
+<script src="js/jquery-ui-timepicker-addon.js"></script>
+<script src="js/jquery.tablesorter.combined.min.js"></script>
+
+<!-- show app name and user id at top in standard format -->
+<div class="header">
+  <div class="left"><table><tr><td><img
+    src="css/images/EmComMap_logo.png" width=80/></td><td><font size="2"><div id="app-version"></div></font></td></tr></table></div>
+  <div class="right"><a href="Documentation/EmComMap_user_guide.pdf" target="_blank"><small>Documentation</small></a> &nbsp; &nbsp; User: <b><script
+    type="text/javascript">document.write(sessionStorage.getItem('emcommap.username'));</script></b>
+    &nbsp; <button type="submit" id="logout-button">Log out</button>
+  </div>
+</div>
+
+<!-- allow user to select existing incident and proceed to app -->
+<br>
+
+
+<center>
+<div>
+<form id="incident-form" action="emcommap.html" onsubmit="event.preventDefault(); validateSelectIncidentForm();">
+   <select id="incident-selector" required disabled> <!-- disabled until initialized -->
+  <option disabled="disabled" selected value="">Select existing incident</option>
+<!-- the rest are filled in via javascript -->
+</select>
+
+<button type="submit" disbabled id="show-button">Show EmComMap</button>
+</form>
+</div>
+</center>
+
+<br>
+<center><h2>or</h2></center>
+
+<br>
+<center><h4>Define new incident</h4></center>
+
+<br>
+
+<center>
+<div class="box inline">
+<form id="new-incident-form" action="emcommap.html" onsubmit="event.preventDefault(); validateNewIncidentForm();">
+
+<center>
+<label>Region: &nbsp; <select disabled id="region-selector"> <!-- start disabled until javascript run -->
+  <option disabled selected value="">Select existing region</option>
+<!-- the rest are filled in via javascript -->
+</select></label>
+&nbsp; <b>or</b> &nbsp;
+<label>Define new region (click filled square icon on map). &nbsp; New region name: &nbsp; <input type="text" size="10" id="region-name"></input></label>
+</center>
+
+<br>
+<center><div> <!-- start and end time -->
+<label>Incident start:&nbsp;<input type="text" size="18"
+  id="incident-start" required style="position: relative; z-index: 100000;"></input></label>
+  &nbsp;
+<label>Incident end (blank if ongoing):&nbsp;<input type="text"
+  size="18" id="incident-end" style="position: relative; z-index: 100000;"></input></label>
+</div></center>
+
+<br>
+<center>
+<label>New incident name:<input type="text" id="new-incident-name" required size="14"></input></label>
+&nbsp; <label>Description: &nbsp;  <input type="text"
+id="incident-desc" required size="20"></input></label> &nbsp;
+<button type="submit" id="create-button" disabled>Create region/incident and show EmComMap</button>
+</center>
+</form>
+
+</div></center>
+
+  <br>
+<center><div id="mapid" style="width: 550px; height: 460px;"></div></center> <!-- map -->
+
+</div>
+
+
+<!-- allow user to select existing region -->
+<!-- allow user to define region -->
+<!-- allow user to define time range -->
+<!-- allow user to define ncident from given region and time range -->
+<!-- display map -->
+<!-- go button active only if incident selected -->
+
+
+<script src="map.js"></script>
+<script src="incident.js"></script>
+
+<footer>
+<br>
+<font size="2">
+  <a href="https://github.com/DanRuderman/EmComMap">EmComMap</a>
+  © 2018 <a href="mailto:dlruderman@gmail.com">Dan Ruderman</a> (k6oat).
+</font>
+</footer>
+
+</body>
+</html>
+
+
+

@@ -1,0 +1,303 @@
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 100%;
+  background: #fff; /* was #333 */
+}
+
+/* Keep label together with inputs on the same line */
+label {
+  display: inline-block;
+}
+
+/* center table head and data */
+td,th {
+  text-align: center;
+} 
+
+input[disabled] {
+    background-color: #DDD;
+}
+
+h1 {
+	margin-top: 0;
+}
+
+#status {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.open {
+  color: green;
+}
+
+.closed {
+  color: red;
+}
+
+div.box {
+    background:#F0F0F0;
+  width:auto;
+  height:auto;
+  padding:0.4em;
+  margin-top:0.05em;
+  margin-bottom:0.2em;
+  margin-left:0.2em;
+  margin-right:0.2em;
+  border: 2pt solid black;
+  font-size: 0.8rem;
+}
+
+div.inline {
+    display: inline-block;
+}
+
+/* This is the top area of the page that has the app name, username, region, etc */
+div.header {
+  background:#F8F8F8;
+  padding:0.4em;
+  border: 1pt solid black;
+  font-size: 1.4em;
+/*  position: fixed;*/
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+div.left {
+    float:left;
+}
+
+div.center {
+    float:center;
+}
+
+div.right {
+    float:right;
+}
+
+div.container {
+    display: flex;
+    justify-content: space-between;
+/*    background:#F8F8F8;*/
+    background:#F5F5F5;
+    padding:0.2em;
+    border: 1pt solid black;
+    font-size: 1.4em;
+
+    height: 40px;
+/*    top: 0;*/
+/*    left: 0;*/
+/*    right: 0;*/
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+
+div.container-bare {
+    display: flex;
+    justify-content: space-between;
+    padding:0.4em;
+
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.95rem;
+}
+
+ul li {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #EEE;
+}
+
+ul li:first-child {
+  border-top: 1px solid #EEE;
+}
+
+ul li span {
+  display: inline-block;
+  width: 90px;
+  font-weight: bold;
+  color: #999;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#message-form {
+  margin-top: 1.5rem;
+}
+
+.smallfont {
+    font-size: 0.8rem;
+}
+
+textarea {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #D9D9D9;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  min-height: 80px;
+  margin-bottom: 1rem;
+}
+
+button {
+  display: inline-block;
+  border-radius: 3px;
+  border: none;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.em;
+  color: white;
+  margin: 0 0.25rem;
+  text-align: center;
+  background: #BABABA;
+  border-bottom: 1px solid #999;
+}
+
+button[type="submit"] {
+/*  background: #86b32d;*/
+  background: #479AD5;
+  border-bottom: 1px solid #5d7d1f;
+}
+
+button[type="submit",disabled]{
+  background: #d2e9a5;
+  border-bottom: 1px solid #b1d864;
+}
+
+button:hover {
+  opacity: 0.75;
+  cursor: pointer;
+}
+
+
+/* x-toggle from Walter Rumsby's dabblet.css */
+.x-toggle:hover {
+    cursor: pointer;
+}
+
+.x-toggle input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+}
+
+.x-toggle input[type="checkbox"] + .x-toggle-label-text {
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    width:16px;
+    height: 16px;
+    display:inline-block;
+  padding: 0 0 0 0px;
+}
+
+.x-toggle input[type="checkbox"] + .x-toggle-label-text {
+    background-image: url('images/unlocked.png');
+}
+
+.x-toggle input[type="checkbox"]:checked + .x-toggle-label-text {
+    background-image: url('images/locked.png');
+}
+
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: white;
+   color: black;
+   text-align: center;
+}
+
+.tablesorter {
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+/**************************/
+/* Stuff for tabbed panes */
+/**************************/
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #bbb;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #999;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #777;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+/* for our paperclip attachment button */
+.attachment-button{
+/*    background: #ccc url('images/paperclip.png') no-repeat top left;*/
+/*    padding-left: 35px;*/
+/*    height: 35px;*/
+    color: black;
+}
+
+@keyframes fade { 
+  from { opacity: 0.5; } 
+}
+
+.highlight-marker {
+  animation: fade 0.33s infinite alternate;
+}
+
+.displayed-location-checkbox-label {
+    display: inline-block; /* display it */
+}
+
+.hidden-location-checkbox-label {
+    display: none; /* hide it */
+}
+

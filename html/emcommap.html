@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<!-- Copyright 2018 Dan Ruderman (dlruderman@gmail.com) -->
+<!--
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>EmComMap</title>
+
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="css/style.css"/>
+<link rel="stylesheet" href="css/leaflet.css"/>
+<link rel="stylesheet" href="css/jquery-ui-timepicker-addon.css"/>
+<link rel="stylesheet" href="css/jquery-ui.css"/>
+<link rel="stylesheet" href="css/jquery-ui.theme.css"/>
+<link rel="stylesheet" href="css/theme.default.css"/>
+
+</head>
+
+<body>
+<script src="js/js.cookie.js"></script>
+<script src="config.js"></script>
+<script src="init.js"></script>
+<script src="js/pouchdb-7.0.0.min.js"></script>
+<script src="js/pouchdb.find.js"></script>
+<script src="db.js"></script>
+<script src="tabs.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/timeago.js"></script>
+<script src="js/leaflet.js"></script>
+<script src="js/moment.js"></script>
+<script src="js/jquery-ui-timepicker-addon.js"></script>
+<script src="js/jquery.tablesorter.combined.min.js"></script>
+<script src="js/widget-scroller.js"></script>
+<script src="js/FileSaver.min.js"></script>
+<script src="js/filesize.min.js"></script>
+<script src="js/xlsx-populate-no-encryption.min.js"></script>
+<script src="log_to_excel.js"></script>
+
+<!-- show app name and user id at top in standard format -->
+<div style="display: flex; flex-direction: column;"> <!-- vertical flex -->
+
+<div class="container">
+<div><table><tr><td><a href="incident.html"><img
+  src="css/images/EmComMap_logo.png" width=80/></a></td><td><font size="2"><div id="app-version"></div></font></td></tr></table></div>
+<div>
+<table cellpadding="0" cellspacing="0"><tr><td><font size="3"><b><div
+  id="incident-field"></div></b></font></td></tr><tr><td><font size="2"><div id="incident-desc-field"></div></font></td></tr></table>
+</div>
+
+<font color="red" size="3"><strong><div id="test-text"></div></strong></font>
+
+<div>
+  <form>
+<font size="3">Tactical ID:&nbsp;<input type="text" style="font-size:
+  12pt; text-align:left; border-color: black; border-width: 1px" size=12 readonly id="tactical-call"></font>
+   <button type="submit"  id="change-tactical-id"">Change</button></form>
+</div>
+
+  <div><a href="Documentation/EmComMap_user_guide.pdf"
+  target="_blank"><small>Documentation</small></a></div>
+  
+  <div><label id="user-field"></label> &nbsp; <button type="submit" id="logout-button">Log out</button></div>
+  </div>
+
+<div style="display: flex;"> <!-- horizontal layout -->
+<div id="map-container" style="width: 625px; height: 620px;"><div id="mapid" style="position: relative; width: 600px; height: 615px;"></div></div>
+<div id="page-wrapper" style="width: 625px; height: 615px; overflow-y: scroll; overflow-x: scroll;">
+
+  
+
+<!-- Links to the tabbed panes on the right -->
+<div class="tab">
+  <button class="tablinks" id="defaultOpen" onclick="openTab(event, 'traffic')">Traffic</button>
+  <button class="tablinks" onclick="openTab(event, 'operators')">Operators</button>
+  <button class="tablinks" id="locationsTab" onclick="openTab(event, 'locations')">Locations</button>
+  <button class="tablinks" id="incidentTab" onclick="openTab(event, 'incident')">Incident</button>
+</div>
+
+
+
+<!-- First tab: traffic. Open by default -->
+<div class="tabcontent" id="traffic">
+<div class="box"> <!-- traffic  box-->
+  <!-- checkboxes to select locations for monitoring traffic. Names 
+  of buttons are their location ids -->
+  <div class="left"><b>Select locations to monitor traffic</b></div>
+  <div class="right"><button type="submit" onclick="generateExcelLog('traffic_log.xlsx')">Export traffic log</button></div>
+<br>
+<div style="width: 575px; height: auto; max-height: 60px; overflow-y: scroll;">
+  <form id="locations-form" style="padding: 5px 3px">
+
+  <!-- for locking -->
+        <label class="x-toggle">
+            <input type="checkbox" checked value="_ignore_"
+            id="locations-locked-checkbox" onclick="locationLockClicked();">
+            <span class="x-toggle-label-text"></span>
+        </label>
+  
+  <label><input type="checkbox" id="all-locs-checkbox" value="_all_locations_" checked onclick="updateTrafficTableForCheckboxes()">All&nbsp;</label> 
+    <label><input type="checkbox" id="unspecified-loc-checkbox" value="" onclick="updateTrafficTableForCheckboxes()">unspecified&nbsp;</label> 
+    </form>    
+    </div>
+
+    <!-- this is the div containing the traffic table -->
+  <div class="smallfont" id="traffic-table-div"
+    style="width: 540px; height: 350px;"></div>
+
+    </div> <!-- traffic box -->
+
+    <!-- NEW TRAFFIC -->
+    <div class="box"> <!-- new traffic box -->
+      <form id="traffic-form">
+      <label>From: <input type="text" id="traffic-form-from" size=8 required></label>
+      <label>To: <input type="text" id="traffic-form-to" size=8></label>
+    <label>Related location: <input type="text" id="traffic-form-loc-label" size=6></label>
+      <label>Precedence:
+      <select id="traffic-form-precedence">
+	<option value="routine" selected="selected">Routine</option>
+	<option value="priority">Priority</option>
+	<option value="emergency">Emergency</option>
+      </select></label>
+      <br>
+      <label>Message: <input type="text" name="message" id="traffic-form-message" size=75 required></label>
+      <br>
+      <label><div data-tip="Click to attach a file to message. Select cancel to undo attachment">Attachment:<input type="file" id="traffic-form-file-button"/></div></label>
+      <button type="submit">Submit traffic</button>
+
+      </form>
+      </div> <!-- new traffic box -->
+</div> <!-- traffic tab -->
+
+<div id="operators" class="tabcontent">
+<div class="box"> <!-- operator status display -->
+   <div id="operators-online"></div>
+  <div class="smallfont" id="operator-status-table-div" style="width: 100%; height: 320px; 
+    overflow-y: scroll">
+    <table id="operator-status-table" border="1">
+      <thead><tr><th>Operator</th><th>Online</th><th>Time</th><th>Rel. time</th><th>Location</th><th
+	width="35%">Status</th></thead>
+	<tbody id="operator-status-tbody"></tbody>
+      </table>
+    </div>
+  </div> <!-- operator status display -->
+
+  <br>
+<div class="box">
+  <form id="status-form">
+<label>Callsign: <input type="text" id="callsign-text" size=7 required></label> 
+  <label>Status: <input type="text" id="status-text" size=35></label>
+  <br>
+<label>Location: <input type="text" id="location-text" size=10 required></label>
+<label>Latitude:<input type="text" name="lat" id="status-form-lat" size="9" required></label>
+<label>Longitude:<input type="text" name="lon" id="status-form-lon" size="9" required></label>
+
+        <label class="x-toggle">
+            <input type="checkbox" id="status-locked-checkbox" onclick="statusLockClicked();">
+            <span class="x-toggle-label-text"></span>
+        </label>
+  
+  <button type="submit">Submit status</button>
+  </form>
+  </div>
+</div> <!-- operators tab -->
+
+<div id="locations" class="tabcontent">
+  <!-- INFO ABOUT SELECTED LOCATION -->
+    <div class="box"> <!-- selected location box -->
+      <center><b>Selected location info. (Click on location to select)</b></center>
+      <br/>
+    <span id="disp-location-name"></span>
+    <span id="disp-location-label"></span>
+    <span id="disp-location-type"></span>
+
+
+    <br/>
+	Operators on site:&nbsp;<span id="disp-location-operators"></span>
+      <br/>
+      Info last updated:&nbsp;<span id="disp-location-info-updater"></span>
+      &nbsp;<span id="disp-location-info-update-time"></span>
+      &nbsp;<span id="disp-location-info-update-time-rel"></span>
+      <br/>
+  <textarea rows="6" cols="30" id="disp-location-info"></textarea>
+	  <button type="submit" onclick="submitLocationInfo()">Update location info</button>
+      <br/>
+      <center>Refreshed <span id="disp-location-update-time-rel"></span></center>
+	
+    </div>  <!-- selected location box -->
+  
+    <!-- NEW LOCATION -->
+    <br>
+    <div class="box">
+    <form id="location-form">
+  <label>Latitude:<input type="text" name="lat" id="location-form-lat" size="8" required></label>
+  <label>Longitude:<input type="text" name="lon" id="location-form-lon" size="8" required></label>
+      <label>Type: <select id="location-form-type">
+	<option value="hospital" selected>hospital</option>
+	<option value="police">police</option>
+	<option value="fire">fire</option>
+	<option value="government">government</option>
+	<option value="ICP">command post</option>
+	<option value="incident">incident</option>
+	<option value="other">other</option>
+      </select></label>
+  Radius (m): <input type="text" name="radius"
+    id="location-form-radius" size=5  style="text-align: right" required value="0">
+    <br>
+    <label>Label: <input type="text" name="label" style="text-align: right" id="location-form-label"
+    size=7 required></label>
+  <label>Description: <input type="text" name="desc" style="text-align: right" id="location-form-desc"
+      size=30 required></label>
+      <label><input type="checkbox" id="location-form-incident-only-cb">only for this incident</label>
+      <button type="submit">Define new location</button>
+
+      </form>
+      </div>
+
+      <form>
+      <br>
+      <label><button type="submit" id="upload-locations-button">Upload locations
+      from TSV file</button> <b>File format:</b> Label Description Type Lat Lon</label>
+      <input id="upload-locations-file" type="file"
+      style="display:none;" />
+      </form>
+
+
+      
+</div> <!-- locations tab -->
+
+
+<div id="incident" class="tabcontent"> <!-- incident tab -->
+  <!-- INFO ABOUT INCIDENT -->
+    <div class="box"> <!-- incident box -->
+    <span id="incident-name"></span>
+
+
+  <label>Description:&nbsp;<input id="incident-description" size=70></label>
+  <br>
+  <span id="incident-region"></span>
+
+<br>
+<label>Incident start:&nbsp;<input type="text" size="18"
+  id="incident-start" style="position: relative; z-index: 100000;"></input></label>
+  &nbsp;
+  <label>Incident end (blank if ongoing):&nbsp;<input type="text"
+  size="18" id="incident-end" style="position: relative; z-index: 100000;"></input></label>
+
+  
+  <br>
+  <br>
+  Info last updated:&nbsp;<span id="incident-info-updater"></span>
+  &nbsp;<span id="incident-info-update-time"></span>
+  &nbsp;<span id="incident-info-update-time-rel"></span>
+  <br/>
+  <textarea rows="14" cols="30" id="incident-info"></textarea>
+	  <button type="submit" onclick="submitIncidentInfo()">Update incident info</button>
+
+  <br/>
+      <center>Refreshed <span id="incident-update-time-rel"></span></center>
+	
+</div> <!-- end incident box -->      
+</div> <!-- incident tab -->
+
+</div>
+
+</div> <!-- horizontal flex -->
+</div> <!-- vertical flex -->
+
+      
+<script src="map.js"></script>
+<script src="app.js"></script> <!-- db.js must be loaded first to obtain the username -->
+
+
+<footer>
+<br>
+<font size="2">
+  <a href="https://github.com/DanRuderman/EmComMap">EmComMap</a>
+  © 2018 <a href="mailto:emcommap@gmail.com">Dan Ruderman</a> (k6oat).
+</font>
+</footer>
+      
+</body>
+</html>
+
+	
+
+

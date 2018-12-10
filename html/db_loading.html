@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<!-- Copyright 2018 Dan Ruderman (dlruderman@gmail.com) -->
+<!--
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+<!-- The purpose of this page is just to wait for the entire database -->
+<!-- to be transferred or updated. That way no UI is presented until ready. -->
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>EmComMap - loading database</title>
+
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="css/style.css"/>
+
+</head>
+
+<body>
+<script src="js/js.cookie.js"></script>
+<script src="config.js"></script>
+<script src="init.js"></script>
+<script src="js/pouchdb-7.0.0.min.js"></script>
+<script src="js/pouchdb.find.js"></script>
+<script src="db.js"></script>
+
+<!-- show app name and user id at top in standard format -->
+<div class="header">
+  <div class="left" ><table><tr><td><img src="css/images/EmComMap_logo.png" width=80/></a></td><td><font size="2"><div id="app-version"></div></font></td></tr></table></div>
+</div>
+</div>
+
+<!-- allow user to select existing incident and proceed to app -->
+<br>
+
+
+<center>
+<h2>Loading database...</h2>
+<br>
+<br>
+ This may take a full minute the first time.
+<br>
+<br>
+<br>
+<br>
+<footer>
+<br>
+<font size="2">
+  <a href="https://github.com/DanRuderman/EmComMap">EmComMap</a>
+  © 2018 <a href="mailto:emcommap@gmail.com">Dan Ruderman</a> (k6oat).
+</font>
+</footer>
+
+<script src="db_loading.js"></script>
+
+</body>
+</html>
+
+
+

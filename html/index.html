@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<!-- Copyright 2018 Dan Ruderman (dlruderman@gmail.com) -->
+<!--
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>EmComMap</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+
+<script src="js/pouchdb-7.0.0.min.js"></script>
+<script src="js/pouchdb.find.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+
+
+<link rel="stylesheet" href="css/login_style.css"/>
+
+<script src="js/js.cookie.js"></script>
+<script src="config.js"></script>
+<script src="login.js"></script>
+
+
+<body>
+<center><img src="css/images/EmComMap_logo.png" width=250/></center>
+
+<center>
+<div class="container">
+<div class="main">
+<form id="form_id" method="post" name="myform">
+<label><font size="5">Username</font></label>
+<input type="text" name="username" id="username" class="userpass"/>
+
+<br>
+
+  <label><font size="5">Password</font></label>
+<input type="password" name="password" id="password" class="userpass"/>
+
+<br>
+<p align="left">
+  <input type="radio" id="remote-radio" name="db-type" value="remote" checked>
+<label for="remote-radio"><font size="4">Remote host: </font>
+<input type="text" name="database_host" id="database_host" size=25/></label>
+
+<label><font size="4">port: </font>
+<input type="text" name="database_port" id="database_port" size=6/></label>
+<br>
+  <input type="radio" id="local-radio" name="db-type"
+  value="local"><label for="local-radio"><font
+  size="4">&nbsp;&nbsp;Standalone mode (no credentials needed)</font></label>
+  </p>
+<label><font size="4">Tile server URL: </font>
+<input type="text" id="map_server_url" size=75/></label>
+  
+<br>
+<input type="button" value="Login" id="submit" onclick="validate_password()"/>
+</form>
+
+<p>
+<font size="4"><center>Credential requests to <a href="mailto:emcommap@gmail.com">Dan Ruderman</a></center></font>
+</div>
+</div>
+</center>
+
+<footer>
+<br>
+<font size="2">
+  <a href="https://github.com/DanRuderman/EmComMap">EmComMap</a>
+  © 2018 <a href="mailto:dlruderman@gmail.com">Dan Ruderman</a> (k6oat).
+</font>
+</footer>
+
+
+<!-- set up some of the text fields -->
+<script>
+document.getElementById('database_host').value = DEFAULT_DB_HOST; 
+document.getElementById('database_port').value = DEFAULT_DB_PORT; 
+document.getElementById('map_server_url').value = TILE_SERVER;
+</script>
+
+</body>
+</html>
+
+	
+
+
