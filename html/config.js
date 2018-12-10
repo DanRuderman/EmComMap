@@ -16,7 +16,7 @@
 //    along with this program.  If not, see https://www.gnu.org/licenses/.
 //
 
-const VERSION = "v0.4a"; // software version
+const VERSION = "v0.4b"; // software version
 
 const TEST_MODE = false; // true means all messages and statuses will be prepended with "TEST: "
 
