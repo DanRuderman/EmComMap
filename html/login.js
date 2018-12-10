@@ -15,6 +15,10 @@
 //    You should have received a copy of the GNU Affero General Public License
 //    along with this program.  If not, see https://www.gnu.org/licenses/.
 //
+
+// fill in the credentials request
+document.getElementById("credentials-request").innerHTML = '<a href="mailto:' + ADMIN_EMAIL + '"><font size="4">Request credentials</font></a>';
+
 async function credentialsValid(username, password, dbhost, dbport) {
     try {
 	var remoteDB = new PouchDB('http://' + username + ':' + password + '@' + dbhost + ':' + dbport + '/' + REMOTE_DB_NAME);
@@ -37,6 +41,11 @@ async function validate_password(){
     var mapServerURL = document.getElementById('map_server_url').value;
     var run_locally = document.getElementById('local-radio').checked;
 
+    if(username == "") {
+	alert("Username must not be blank.");
+	return;
+    }
+    
     if(run_locally) { // the want to run locally
 	sessionStorage.setItem(USERNAME_ID, username);
 	sessionStorage.setItem(PASSWORD_ID, password);

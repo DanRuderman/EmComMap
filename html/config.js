@@ -18,9 +18,10 @@
 
 const VERSION = "v0.4a"; // software version
 
-const TEST_MODE = true; // true means all messages and statuses will be prepended with "TEST: "
+const TEST_MODE = false; // true means all messages and statuses will be prepended with "TEST: "
 
-// possible values: "local", "k6oat", "aws"
+const ADMIN_EMAIL = ""; // fill this in with the email contact for credentials requests
+
 const RUN_LOCATION = "local";
 
 if(RUN_LOCATION == "my-install") {
@@ -33,19 +34,6 @@ if(RUN_LOCATION == "my-install") {
     };
     var DEFAULT_DB_HOST = '<host>'; // set <host> to your CouchDB server
     var LOCAL_DB_NAME = 'emcommap';
-} else if(RUN_LOCATION == "k6oat") {
-    //
-    // For k6oat server
-    //
-    var TILE_SERVER = 'http://k6oat-appsrv.local.mesh:8080/styles/klokantech-basic/{z}/{x}/{y}.png';
-    var TILE_SERVER_OPTS = {
-	maxZoom: 18,
-	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-	    '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-	    'Server courtesy of <a href="https://openmaptiles.com/">OpenMapTiles</a>'
-    };
-    var DEFAULT_DB_HOST = 'k6oat-appsrv.local.mesh';
-    var LOCAL_DB_NAME = 'emcommap_production';
 } else if(RUN_LOCATION=="local") {
 //
 // For running on local computer with internet access to external tile server
@@ -80,7 +68,7 @@ const DEFAULT_DB_PORT = '5984'; // 5984=couchDB
 
 const REMOTE_DB_NAME = 'emcommap';
 const ATTACHMENT_DB_NAME = 'emcommap_attachments';
-const MAX_ATTACHMENT_SIZE_MB = 10;
+const MAX_ATTACHMENT_SIZE_MB = 10; // This is the maximum size of a file attachment.
 
 const RUN_LOCAL_LOCAL_DB_NAME = "emcommap_local"; // this is name of local database if not connected to remote
 
