@@ -59,9 +59,11 @@ credentials = true
 methods = GET, PUT, POST, HEAD, DELETE
 headers = accept, authorization, content-type, origin, referer, x-csrf-token
 ```
-
 Restart CouchDB:  
 `$ sudo /etc/init.d/couchdb restart`
+
+Note: With newer versions of CouchDB you may need to insated enable CORS through the CouchDB web configuration console, setting origins to "*".
+
 
 Set up databases using web configuration tool. Direct your browser to
 `http://<host>:5984/_utils/`, where `<host>` is the hostname or IP address
@@ -104,6 +106,7 @@ You must give each user that you create permission to access the EmComMap databa
 1. Click *Update* to complete.
 1. Repeat these same steps for the database *emcommap_attachments*
 
+Note: It has been reported that you may need to add users one at a time to get this to work.
 
 #### Apache2 web server (https://httpd.apache.org/)
 
