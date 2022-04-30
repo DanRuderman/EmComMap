@@ -3,12 +3,6 @@
 
 <img src="Resources/map_image.png" width="450">
 
-### Home page
-[EmComMap](http://emcommap.org)
-
-### Demo
-[Demo server](http://app.emcommap.org/EmComMap/html/index.html)
-
 ### Features
 * Interactive map with symbols for operators, locations, and incidents
 * Incidents defined by geographic region and time
