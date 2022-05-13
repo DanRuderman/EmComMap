@@ -1,5 +1,5 @@
 //
-// Copyright 2018 Dan Ruderman (dlruderman2gmail.com)
+// Copyright 2018 Dan Ruderman (dlruderman@gmail.com)
 //
 //
 //    This program is free software: you can redistribute it and/or modify
