@@ -43,7 +43,7 @@ Edit the file /etc/couchdb/local.ini, for example using
 
 1. Insert the line:
 ```enable_cors = true```
-beneath the line that reads
+beneath the line that reads (note in some older versions this needs to read 'http' instead of 'httpd')
 ```[httpd]```
 
 1. Add the following lines to the end of the file:
@@ -124,10 +124,7 @@ Create a directory for the tile server data:
 
 Download map tiles from [OpenMapTiles](https://openmaptiles.com/downloads/planet/). You can download the entire planet or just a region of interest by navigating to that location. For this exmple we will download the Los Angeles region. Whichever geographic area you choose, you will want to download the *OpenSteetMap* tiles. Note you will need to create an account to download tiles. OpenMapTiles will provide you a *wget* command to download. Download into the directory you created above (e.g. */usr/local/tileserver-gl*).
 
-`$ sudo wget -c https://openmaptiles.com/download/<TOKEN>/osm-2017-07-03-v3.6.1-california_los-angeles.mbtiles?usage=personal`
-
-Unfortunately, the filename ends up with an odd suffix, which can be fixed using *mv*:  
-`$ sudo mv osm-2017-07-03-v3.6.1-california_los-angeles.mbtiles\?usage\=personal osm-2017-07-03-v3.6.1-california_los-angeles.mbtiles`
+`$ sudo wget -c https://openmaptiles.com/download/<TOKEN>/osm-2017-07-03-v3.6.1-california_los-angeles.mbtiles?usage=personal -O osm-2017-07-03-v3.6.1-california_los-angeles.mbtiles`
 
 Install docker:  
 `$ sudo apt install docker.io`
