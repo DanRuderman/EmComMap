@@ -43,8 +43,9 @@ Edit the file /etc/couchdb/local.ini, for example using
 
 1. Insert the line:
 ```enable_cors = true```
-beneath the line that reads (note in some older versions this needs to read 'http' instead of 'httpd')
-```[httpd]```
+beneath the line that reads 
+```[http]```
+(note in newer versions this may be 'httpd' instead of 'http')
 
 1. Add the following lines to the end of the file:
 ```[cors]
