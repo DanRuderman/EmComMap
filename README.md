@@ -1,5 +1,5 @@
 # EmComMap
-## Live multi-user annotatble map for emergency communications
+## Live multi-user annotatable map for emergency communications
 
 <img src="Resources/map_image.png" width="450">
 
